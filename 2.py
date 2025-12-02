@@ -1,19 +1,6 @@
 import numpy as np
+import re
 
-l = [np.array(e.split('-'), dtype=int) for e in open(0).read().split(',')]
-
-sum = 0
-
-for r in l:
-    for i in range(r[0], r[1]+1):
-        id = str(i)
-        for p in range(1, len(id)+1):
-            if len(id) % p == 0:
-                reps = len(id) // p
-                if reps >= 2:
-                    prefix = id[:p]
-                    if id == prefix * reps:
-                        sum += i
-                        break
-
-print(sum)
+l = np.concat([range(int((f := e.split('-'))[0]), int(f[1])+1) for e in open(0).read().split(',')])
+print(np.sum([e for e in l if re.match("^(\\d+)\\1$", str(e))]))
+print(np.sum([e for e in l if re.match("^(\\d+)\\1+$", str(e))]))
