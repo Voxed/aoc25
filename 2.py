@@ -1,4 +1,3 @@
 import re
-b='*range('
-l=eval(f"[{b}{open(0).read().replace(',','+1),'+b).replace('-',',')}+1)]")
+l=eval('[' + re.sub(r"(\d+)-(\d+)", r"*range(\1,\2)",open(0).read()) + ']')
 [print(sum([e for e in l if re.match("^(\\d+)\\1"+r,str(e))]))for r in["$","+$"]]
