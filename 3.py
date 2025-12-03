@@ -8,4 +8,4 @@ def largest(b, n):
     i = np.argmax(b[:-n or None])
     return b[i]*10**n + largest(b[i+1:], n-1)
 
-print(sum([largest(b, 11) for b in b]))
+[print(sum([largest(b, i) for b in b])) for i in [1,11]]
