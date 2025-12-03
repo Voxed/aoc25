@@ -4,7 +4,6 @@ double f(List<int> b, int n)
 {
     if(n < 0) return 0;
     var m = b[..^n].Max();
-    var i = b.IndexOf(m);
-    return m*Math.Pow(10,n)+f(b[(i+1)..],n-1);
-}
+    return m*Math.Pow(10,n)+f(b[(b.IndexOf(m)+1)..],n-1);
+} 
 foreach(var p in new[]{1,11}) Console.WriteLine(l.Select(l=>f(l,p)).Sum());
