@@ -17,21 +17,20 @@ while True:
     # Removal condition (Scroll count in a 3x3 vicinity is actually max 4 if you count resident scroll)
     remove = has_scroll & (scroll_count <= 4)
 
-    is_p1 = answer == 0
+    remove_count = remove.sum()
 
-    # Add removals to tally
-    answer += remove.sum()
+    # p1
+    if answer == 0:
+        print(remove_count)
 
-    # Print answer to p1
-    if is_p1:
-        print(answer)
+    answer += remove_count
 
-    # Break if nothing to remove
-    if not remove.sum():
+    # Break if there's nothing to remove
+    if remove_count == 0:
         break
 
     # Remove free scrolls
     has_scroll = has_scroll & ~remove
 
-# Print answer to p2
+# p2
 print(answer)
