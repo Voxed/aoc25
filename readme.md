@@ -3,7 +3,7 @@ time to burn some lifetime
 ### Python
 python + powershell
 ```powershell
-Get-Content input.txt | python <day>.cs
+Get-Content input.txt | python <day>.py
 ```
 
 ### C#
