@@ -19,7 +19,7 @@ while True:
 
     remove_count = remove.sum()
 
-    # p1
+    # > Part 1
     if answer == 0:
         print(remove_count)
 
@@ -32,5 +32,5 @@ while True:
     # Remove free scrolls
     has_scroll &= ~remove
 
-# p2
+# > Part 2
 print(answer)
