@@ -33,4 +33,4 @@ while(True):
             if s < 4 and e == '@':
                 l[y][x] = '.'
                 sum += 1
-    print(sum)
+    print(sum) # This will start spamming the same number when stagnated :)
