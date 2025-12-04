@@ -7,7 +7,7 @@ answer = 0
 # '@' = 1
 has_scroll = np.pad(np.array([[u == '@' for u in e.strip()] for e in open(0)], dtype=int), 1)
 
-# Remove until nothing to remove
+# Remove until nothing is left to remove
 while True:
 
     # 3x3 Kernel (Each element will contain scrolls in 3x3 vicinity)
