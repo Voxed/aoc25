@@ -10,7 +10,7 @@ has_scroll = np.pad(np.array([[u == '@' for u in e.strip()] for e in open(0)], d
 # Remove until nothing is left to remove
 while True:
 
-    # 3x3 Kernel (Each element will contain scrolls in 3x3 vicinity)
+    # 3x3 Kernel (Each element will contain scrolls in a 3x3 vicinity)
     vert = np.roll(has_scroll, 1, 0) + has_scroll + np.roll(has_scroll, -1, 0) # Vertical kernel
     scroll_count = np.roll(vert, 1, 1) + vert + np.roll(vert, -1, 1)           # Horizontal kernel
 
