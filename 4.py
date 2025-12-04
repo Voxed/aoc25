@@ -30,7 +30,7 @@ while True:
         break
 
     # Remove free scrolls
-    has_scroll = has_scroll & ~remove
+    has_scroll &= ~remove
 
 # p2
 print(answer)
