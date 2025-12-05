@@ -11,8 +11,8 @@ ranges.sort()
 # Part 1: straightforward, add if ingredient is in any range.
 a = 0
 for ingredient in ingredients.split():
-    for r in ranges:
-        if int(ingredient) in range(*r):
+    for (start, end) in ranges:
+        if start <= int(ingredient) < end:
             a += 1
             break
 print(a)
