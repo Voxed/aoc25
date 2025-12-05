@@ -8,11 +8,11 @@ ranges = [tuple(np.array(e.split('-'), dtype=int)+(0, 1))
 # Sort based on range start, this is the magic for Part 2
 ranges.sort()
 
-# Part 1, straightforward add if ingredient is in any range.
+# Part 1: straightforward, add if ingredient is in any range.
 a = 0
-for ingredient in [int(e) for e in ingredients.split()]:
+for ingredient in ingredients.split():
     for r in ranges:
-        if r[0] <= ingredient < r[1]:
+        if r[0] <= int(ingredient) < r[1]:
             a += 1
             break
 print(a)
