@@ -45,3 +45,9 @@ cl + powershell
 ```powershell
 cl <day>.cc /std:c++latest /Fe:a.exe /EHsc; Get-Content <day>.<in|ex> | ./a.exe
 ```
+
+### Rust
+rust + powershell
+```powershell
+rustc <day>.rs; Get-Content <day>.<in|ex> | ./05.exe
+```

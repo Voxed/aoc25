@@ -10,3 +10,4 @@ aoc.csproj
 *.exe
 *.pdb
 .vscode
+rust-project.json
