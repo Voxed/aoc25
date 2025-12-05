@@ -9,13 +9,8 @@ ranges = [tuple(np.array(e.split('-'), dtype=int)+(0, 1))
 ranges.sort()
 
 # Part 1: straightforward, add if ingredient is in any range.
-a = 0
-for ingredient in ingredients.split():
-    for (start, end) in ranges:
-        if start <= int(ingredient) < end:
-            a += 1
-            break
-print(a)
+print(sum([any([start <= int(ingredient) < end for (start, end) in ranges])
+      for ingredient in ingredients.split()]))
 
 # Part 2
 a = 0
