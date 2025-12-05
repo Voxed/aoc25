@@ -14,10 +14,8 @@ int main()
     char _;
     
     vector<pair<uint64_t, uint64_t>> ranges;
-    while (getline(cin, line))
+    while (getline(cin, line) && !line.empty())
     {
-        if (line.empty())
-            break;
         uint64_t start, end;
         stringstream(line) >> start >> _ >> end;
         end++;
@@ -34,8 +32,7 @@ int main()
                               [i](auto range) { return range.first < i && i <= range.second; });
             }));
 
-    uint64_t sum = 0;
-    uint64_t cursor = 0;
+    uint64_t sum = 0, cursor = 0;
     for (auto [start, end] : ranges)
     {
         if (cursor >= end)
