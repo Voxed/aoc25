@@ -4,3 +4,9 @@ bin
 obj
 dotnet-tools.json
 aoc.csproj
+.clangd
+.clang-format
+*.obj
+*.exe
+*.pdb
+.vscode
