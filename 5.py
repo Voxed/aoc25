@@ -1,16 +1,16 @@
 import numpy as np
 
-ranges, ingredients = open(0).read().split('\n\n')
+ranges, ingredients = map(str.split, open(0).read().split('\n\n'))
 
 # Parse ranges into tuples of (start(inclusive), end(exclusive)).
 ranges = [tuple(np.array(e.split('-'), dtype=int)+(0, 1))
-          for e in ranges.split()]
+          for e in ranges]
 # Sort based on range start, this is the magic for Part 2
 ranges.sort()
 
 # Part 1: straightforward, add if ingredient is in any range.
-print(sum([any([start <= int(ingredient) < end for (start, end) in ranges])
-      for ingredient in ingredients.split()]))
+print(sum([any([start <= int(i) < end for (start, end) in ranges])
+      for i in ingredients]))
 
 # Part 2
 a = 0
