@@ -2,3 +2,5 @@ input.txt
 example.txt
 bin
 obj
+dotnet-tools.json
+aoc.csproj
