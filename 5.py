@@ -1,5 +1,3 @@
-import numpy as np
-
 lines = [e.strip() for e in open(0)]
 ranges=[[*map(int,e.split('-'))] for e in lines[:lines.index('')]]
 ranges.sort()
