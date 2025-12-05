@@ -12,7 +12,7 @@ ranges.sort()
 a = 0
 for ingredient in ingredients.split():
     for r in ranges:
-        if r[0] <= int(ingredient) < r[1]:
+        if int(ingredient) in range(*r):
             a += 1
             break
 print(a)
