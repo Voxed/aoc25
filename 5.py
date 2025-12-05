@@ -1,18 +1,26 @@
 import numpy as np
 
-i = [e.strip() for e in open(0)]
-r=eval('['+','.join(['(' + e.replace('-',',') + "+1)" for e in i[:i.index('')]])+']')
-j=[int(e) for e in i[i.index('')+1:]]
-r.sort()
-print(r)
+lines = [e.strip() for e in open(0)]
+ranges=[[*map(int,e.split('-'))] for e in lines[:lines.index('')]]
+ranges.sort()
 
-s = 0
-p = 0
-for ra in r:
-    if p < ra[0]:
-        p = ra[0]
-    if p >= ra[1]:
+# Part 1
+a = 0
+for ingredient in [int(e) for e in lines[lines.index('')+1:]]:
+    for r in ranges:
+        if ingredient >= r[0] and ingredient <= r[1]:
+            a += 1
+            break
+print(a)
+
+# Part 2
+a = 0
+cursor = 0
+for r in ranges:
+    if cursor < r[0]:
+        cursor = r[0]
+    if cursor > r[1]:
         continue
-    s += ra[1] - p
-    p = ra[1]
-print(s)
+    a += r[1]+1 - cursor
+    cursor = r[1]+1
+print(a)
