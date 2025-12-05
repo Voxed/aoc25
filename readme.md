@@ -38,10 +38,10 @@ Get-Content <day>.<in|ex> | dotnet run <day>.cs
 ### C++
 clang + powershell
 ```powershell
-clang <day>.<in|ex> -std=c++23; Get-Content input.txt | ./a.exe
+clang <day>.cc -std=c++23; Get-Content <day>.<in|ex> | ./a.exe
 ```
 
 cl + powershell
 ```powershell
-cl <day>.<in|ex> /std:c++latest /Fe:a.exe /EHsc; Get-Content input.txt | ./a.exe
+cl <day>.cc /std:c++latest /Fe:a.exe /EHsc; Get-Content <day>.<in|ex> | ./a.exe
 ```
