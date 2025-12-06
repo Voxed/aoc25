@@ -21,7 +21,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             row
         }))
         .chain(std::iter::once(padding_row))
-        .collect::<Vec<Vec<bool>>>();
+        .collect::<Vec<Vec<_>>>();
 
     let mut sum = 0;
     loop {
