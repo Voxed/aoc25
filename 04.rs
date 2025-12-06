@@ -12,17 +12,6 @@ fn main() -> Result<(), Box<dyn Error>> {
         .filter(|l| !l.is_empty())
         .collect::<Vec<_>>();
 
-    let padding_row = vec![false; has_scroll.get(0).ok_or("Failed to parse map")?.len() + 2];
-    has_scroll = std::iter::once(padding_row.clone())
-        .into_iter()
-        .chain(has_scroll.into_iter().map(|mut row| {
-            row.insert(0, false);
-            row.push(false);
-            row
-        }))
-        .chain(std::iter::once(padding_row))
-        .collect::<Vec<Vec<_>>>();
-
     let mut sum = 0;
     loop {
         let removals = has_scroll
