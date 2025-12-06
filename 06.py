@@ -16,7 +16,7 @@ ops = lines[-1].split()
 raw_terms = lines[:-1]
 
 # Parse and execute equations as specified in Part 1
-terms = T([[*map(int, l.split())] for l in raw_terms])
+terms = np.array([*map(str.split, raw_terms)], int).T
 print(run(zip(terms, ops)))
 
 # Parse and execute equations as specified in Part 2
