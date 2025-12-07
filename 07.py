@@ -14,7 +14,6 @@ def tl(x, y):
                 return tl(x+1,y+1) + tl(x-1,y+1) + 1
     return 0
 
-timelines = 0
 for y, r in enumerate(l):
     for x, e in enumerate(r):
         if e == 'S':
