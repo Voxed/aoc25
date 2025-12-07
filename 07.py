@@ -12,19 +12,18 @@ hit_splitters = set()
 # Function is cached (memoized)
 @cache
 def tl(x, y):
-    if y+1 >= len(world):
-        # We reached the bottom :)
-        return 0
-    match world[y+1][x]:
-        case '.':
-            # Continue on original timeline
-            return tl(x, y+1)
-        case '^':
-            # Keep track of all the unique splitters for Part 1
-            hit_splitters.add((x, y+1))
-            # Split into two new timelines
-            return tl(x+1, y+1) + tl(x-1, y+1) + 1
-
+    if y+1 < len(world):
+        match world[y+1][x]:
+            case '.':
+                # Continue on original timeline
+                return tl(x, y+1)
+            case '^':
+                # Keep track of all the unique splitters for Part 1
+                hit_splitters.add((x, y+1))
+                # Split into two new timelines
+                return tl(x+1, y+1) + tl(x-1, y+1) + 1
+    # We reached the bottom :)
+    return 0
 
 # Execute the original timeline with beam start at 'S'
 for y, r in enumerate(world):
