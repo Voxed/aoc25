@@ -3,7 +3,8 @@ from functools import cache
 # Simple parser today!
 world = [list(e.strip()) for e in open(0)]
 
-# Global variable for tracking unique splitters
+# Global variable for tracking unique splitters 
+# (only for Part 1, memoize is done through functools.cache)
 # Might be able to deduce this through the function
 # cache but this is not code golf
 hit_splitters = set()
