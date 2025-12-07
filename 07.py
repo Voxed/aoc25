@@ -33,7 +33,7 @@ for y, r in enumerate(world):
             num_timelines = tl(x, y)+1
 
 # Part 1
-print(num_timelines)
+print(len(hit_splitters))
 
 # Part 2
-print(len(hit_splitters))
+print(num_timelines)
