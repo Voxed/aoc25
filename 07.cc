@@ -56,8 +56,6 @@ uint64_t tl(size_t x, size_t y)
 int main()
 {
     string line;
-    char _;
-
     while (getline(cin, line) && !line.empty())
     {
         world.emplace_back(line);
