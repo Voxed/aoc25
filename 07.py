@@ -1,23 +1,24 @@
 from functools import cache
 
-l = [list(e.strip()) for e in open(0)]
-reached = set()
+world = [list(e.strip()) for e in open(0)]
+hit_splitters = set()
 
 @cache
 def tl(x, y):
-    if y+1 < len(l):
-        match l[y+1][x]:
+    if y+1 < len(world):
+        match world[y+1][x]:
             case '.':
                 return tl(x,y+1)
             case '^':
-                reached.add((x,y+1))
+                # We keep track of all the unique splitters for Part 1
+                hit_splitters.add((x,y+1))
                 return tl(x+1,y+1) + tl(x-1,y+1) + 1
     return 0
 
-for y, r in enumerate(l):
+for y, r in enumerate(world):
     for x, e in enumerate(r):
         if e == 'S':
-            timelines = tl(x,y)+1
+            num_timelines = tl(x,y)+1
 
-print(timelines)
-print(len(reached))
+print(num_timelines)
+print(len(hit_splitters))
