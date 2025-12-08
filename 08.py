@@ -21,7 +21,7 @@ num_sets = N
 # Join edges
 for edges, (d, p) in enumerate(pairs):
     # If the amount of edges reaches p1_connections,
-    # we print the product of the length of the 3 largest sets.
+    # we print the product of the lengths of the 3 largest sets.
     if edges == p1_connections:
         print(prod(sorted(map(len, U.to_sets()), reverse=True)[0:3]))
 
