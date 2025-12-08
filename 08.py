@@ -2,8 +2,7 @@ from itertools import combinations
 from math import dist, prod
 from networkx.utils import UnionFind
 
-pos = [eval(e) for e in open(0)]
-N = len(pos)
+N = len(pos := [eval(e) for e in open(0)])
 
 # I don't like questions where you have to do this
 p1_connections = 10 if len(pos) < 1000 else 1000
