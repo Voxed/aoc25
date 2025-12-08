@@ -14,6 +14,7 @@ pairs = sorted(zip(
     combinations(range(N), 2)))
 
 U = UnionFind(range(N))
+
 # We start out with N disjunct sets
 num_sets = N
 
