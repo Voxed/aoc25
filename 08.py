@@ -3,20 +3,21 @@ from math import dist, prod
 from networkx.utils import UnionFind
 
 pos = [eval(e) for e in open(0)]
+N = len(pos)
 
 # I don't like questions where you have to do this
 p1_connections = 10 if len(pos) < 1000 else 1000
 
-nodes = range(0, len(pos))
 
 # Sorted pairs of form [(dist, index1, index2)]
 pairs = sorted(zip(
     map(lambda p: dist(*p), combinations(pos, 2)),
-    combinations(nodes, 2)))
+    combinations(range(N), 2)))
 
-U = UnionFind(nodes)
+
+U = UnionFind(range(N))
 # We start out with N disjunct sets
-num_sets = len(nodes)
+num_sets = N
 
 # Join edges
 for edges, (d, p) in enumerate(pairs):
