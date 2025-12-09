@@ -1,9 +1,18 @@
 import numpy as np
 from shapely import Polygon, Point
-from matplotlib import pyplot as plt
 from collections import defaultdict
+from itertools import combinations
 
 l = [(*map(int, e.strip().split(',')),) for e in open(0)]
+
+# ==================================================================
+#                            Part 1
+# ==================================================================
+print(
+    np.max([
+        (abs(x1 - x2) + 1)*(abs(y1 - y2) + 1)
+        for (x1, y1), (x2, y2) in combinations(l, 2)
+    ]))
 
 # ==================================================================
 #                     Coordinate Compression
@@ -120,11 +129,6 @@ for y_max, r in enumerate(vertical_clearance):
 # ==================================================================
 print(area_max)
 
-xx = np.array(l)[:, 0]
-yy = np.array(l)[:, 1]
-plt.plot(xx, yy)
-plt.show()
-
 # ==================================================================
 #                    First Slow(ish) Solution
 # ==================================================================
@@ -149,4 +153,3 @@ print(int(
 w = Polygon(l)
 for r in w:
     pyplot.plot(r.xy)'''
-
