@@ -6,6 +6,25 @@ from itertools import combinations
 l = [(*map(int, e.strip().split(',')),) for e in open(0)]
 
 # =============================================================================
+#                         First Slow(ish) Solution
+# =============================================================================
+#
+# boxes = [
+#     box(
+#         min(s1.x, s2.x),
+#         min(s1.y, s2.y),
+#         max(s1.x, s2.x),
+#         max(s1.y, s2.y)
+#     ).buffer(0.5, join_style=2) for s1, s2 in combinations(l, 2)]
+# print(len(boxes))
+# print(int(np.max([p.area for p in boxes])))
+#
+# print(int(
+#     sorted([b.area for b in filter(
+#         Polygon(l).buffer(0.5, join_style=2).contains, boxes)
+#     ])[-1]))
+#
+# =============================================================================
 #                                   Part 1
 # =============================================================================
 print(
@@ -122,28 +141,3 @@ for y_max, r in enumerate(vertical_clearance):
 #                              Print Part 2
 # =============================================================================
 print(area_max)
-
-# =============================================================================
-#                         First Slow(ish) Solution
-# =============================================================================
-'''
-boxes = [
-    box(
-        min(s1.x, s2.x),
-        min(s1.y, s2.y),
-        max(s1.x, s2.x),
-        max(s1.y, s2.y)
-    ).buffer(0.5, join_style=2) for s1, s2 in combinations(l, 2)]
-print(len(boxes))
-print(int(np.max([p.area for p in boxes])))
-
-print(int(
-    sorted([b.area for b in filter(
-        Polygon(l).buffer(0.5, join_style=2).contains, boxes)
-    ])[-1]))
-
-#for p in filter(Polygon(l).buffer(0.5, join_style=2).contains, boxes):
-#    pyplot.plot(*p.exterior.xy)
-w = Polygon(l)
-for r in w:
-    pyplot.plot(r.xy)'''
