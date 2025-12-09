@@ -50,6 +50,9 @@ yy_map = {val: index for index, val in enumerate(yy)}
 xcoords_on_row = [
     [x for x in range(len(xx)) if (xx[x], yy[y]) in l]
     for y in range(len(yy))]
+ycoords_on_col = [
+    [y for y in range(len(yy)) if (xx[x], yy[y]) in l]
+    for x in range(len(xx))]
 
 # ==================================================================
 #                       Rasterize Container
@@ -97,19 +100,41 @@ for (y, x) in np.ndindex(arr.shape):
 #                 Find Max Internal Bounding Box
 #                    (with corners in input)
 # ==================================================================
+# This part is not very optimized, but the main bottleneck is
+# rasterization anyway.
+#
+# We iterate over each x-vertex on a row. We then consider each
+# other x-coordinate we then fetch the maximum vertical space
+# available if we wanted to produce a rectangle using these two
+# vertices as bottom corners. We then look if there is a top corner 
+# that would match this rectangle. This is important, as otherwise 
+# we would just be calculating the maximum internal bounding box.
+#
+# Of note is that we can't just keep track about what vertex is
+# above each cell as there might be multiple, and some of them
+# might not work.
+
 area_max = 0
 for y_max, r in enumerate(vertical_space):
+    
+    # Iterate all the x-vertices on this row 
     for x1 in xcoords_on_row[y_max]:
+
+        # For each one, try every other x-coordinate
         for x2 in range(len(r)):
-            y_min = int(y_max - min(r[x1], r[x2]))
-            if x2 in xcoords_on_row[y_min]:
-                x_min = min(x1, x2)
-                x_max = max(x1, x2)
-                height = yy[y_max] - yy[y_min] + 1
-                width = xx[x_max] - xx[x_min] + 1
-                area = width * height
-                if area > area_max:
-                    area_max = area
+
+            # Calculate the maximum size of the 
+            clearence = int(y_max - min(r[x1], r[x2]))
+            for y_min in ycoords_on_col[x2]:
+                if y_min >= clearence:
+                    x_min = min(x1, x2)
+                    x_max = max(x1, x2)
+                    height = yy[y_max] - yy[y_min] + 1
+                    width = xx[x_max] - xx[x_min] + 1
+                    area = width * height
+                    if area > area_max:
+                        print(y_min, ycoords_on_col[x2])
+                        area_max = area
 
 # ==================================================================
 #                        Print Part 2
