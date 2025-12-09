@@ -1,5 +1,7 @@
 import numpy as np
 from shapely import Polygon, Point
+from matplotlib import pyplot as plt
+from collections import defaultdict
 
 l = [(*map(int, e.strip().split(',')),) for e in open(0)]
 
@@ -20,12 +22,13 @@ yy_map = {val: index for index, val in enumerate(yy)}
 # This array is used to quickly check available x coordinates on a
 # row. This is important as we need to check whether our minimum
 # bounding box corners two vertices.
-xcoords_on_row = [
-    [x for x in range(len(xx)) if (xx[x], yy[y]) in l]
-    for y in range(len(yy))]
-ycoords_on_col = [
-    [y for y in range(len(yy)) if (xx[x], yy[y]) in l]
-    for x in range(len(xx))]
+xcoords_on_row = defaultdict(list)
+ycoords_on_col = defaultdict(list)
+for x, y in l:
+    x_compressed = xx_map[x]
+    y_compressed = yy_map[y]
+    xcoords_on_row[y_compressed].append(x_compressed)
+    ycoords_on_col[x_compressed].append(y_compressed)
 
 # ==================================================================
 #                       Rasterize Container
@@ -116,6 +119,11 @@ for y_max, r in enumerate(vertical_clearance):
 #                        Print Part 2
 # ==================================================================
 print(area_max)
+
+xx = np.array(l)[:, 0]
+yy = np.array(l)[:, 1]
+plt.plot(xx, yy)
+plt.show()
 
 # ==================================================================
 #                    First Slow(ish) Solution
