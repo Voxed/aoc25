@@ -123,7 +123,7 @@ for y_max, r in enumerate(vertical_clearance):
             clearence = r[x1]
 
             # For each one, try every other x-coordinate
-            for x2 in range(0, x1) if d == -1 else range(x1, len(r)):
+            for x2 in reversed(range(0, x1)) if d == -1 else range(x1, len(r)):
                 clearence = min(clearence, r[x2])
 
                 # Iterate over all y-vertices that fits the clearence
