@@ -66,7 +66,6 @@ arr = np.array(
 # ==================================================================
 #                   Calculate Height Histogram
 # ==================================================================
-
 # In order to quickly check how large of a rectangle WWwill fit
 # between two x coordinates we construct a 2D array where each cell
 # correspondes to the amount of y-space available above the cell.
@@ -113,7 +112,7 @@ for y_max, r in enumerate(vertical_space):
                     area_max = area
 
 # ==================================================================
-#                        Print Part 1
+#                        Print Part 2
 # ==================================================================
 print(area_max)
 pyplot.imshow(vertical_space)
