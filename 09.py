@@ -62,8 +62,8 @@ compressed_polygon = Polygon([(xx_map[p[0]], yy_map[p[1]]) for p in l])
 world_shape = (len(yy), len(xx))
 arr = np.array(
     [
-        compressed_polygon.covers(Point(x,y))
-        for y,x in np.ndindex(world_shape)
+        compressed_polygon.covers(Point(x, y))
+        for y, x in np.ndindex(world_shape)
     ]).reshape(world_shape)
 
 # ==================================================================
@@ -88,10 +88,10 @@ arr = np.array(
 # available in each column and iterate down. Resetting if we step
 # outside the shape.
 height_hist = np.zeros(len(xx))
-vertical_space = np.zeros(arr.shape)
+vertical_clearance = np.zeros(arr.shape)
 for (y, x) in np.ndindex(arr.shape):
     if arr[y, x]:
-        vertical_space[y, x] = height_hist[x]
+        vertical_clearance[y, x] = height_hist[x]
         height_hist[x] += 1
     else:
         height_hist[x] = 0
@@ -104,37 +104,40 @@ for (y, x) in np.ndindex(arr.shape):
 # rasterization anyway.
 #
 # We iterate over each x-vertex on a row. We then consider each
-# other x-coordinate we then fetch the maximum vertical space
-# available if we wanted to produce a rectangle using these two
-# vertices as bottom corners. We then look if there is a top corner 
-# that would match this rectangle. This is important, as otherwise 
-# we would just be calculating the maximum internal bounding box.
+# other x-coordinate. For each of these other x-coordinates we fetch
+# all the y-vertices that would fit within the clearence in of the
+# vertical clearance array. These vertices, a long with the row
+# we're on gives us a box that fits the shape.
 #
-# Of note is that we can't just keep track about what vertex is
-# above each cell as there might be multiple, and some of them
-# might not work.
+# Then it's trivial to find the box with the maximum area.
 
 area_max = 0
-for y_max, r in enumerate(vertical_space):
-    
-    # Iterate all the x-vertices on this row 
+for y_max, r in enumerate(vertical_clearance):
+
+    # Iterate all the x-vertices on this row
     for x1 in xcoords_on_row[y_max]:
 
         # For each one, try every other x-coordinate
         for x2 in range(len(r)):
 
-            # Calculate the maximum size of the 
+            # Find the maximum available clearance between these x1
+            # and x2.
             clearence = int(y_max - min(r[x1], r[x2]))
-            for y_min in ycoords_on_col[x2]:
-                if y_min >= clearence:
-                    x_min = min(x1, x2)
-                    x_max = max(x1, x2)
-                    height = yy[y_max] - yy[y_min] + 1
-                    width = xx[x_max] - xx[x_min] + 1
-                    area = width * height
-                    if area > area_max:
-                        print(y_min, ycoords_on_col[x2])
-                        area_max = area
+
+            # Iterate over all y-vertices that fits the clearence
+            for y_min in (
+                    y for y in ycoords_on_col[x2] if y >= clearence
+            ):
+                x_min = min(x1, x2)
+                x_max = max(x1, x2)
+
+                # Map back to uncompressed space and calculate the
+                # area :)
+                height = yy[y_max] - yy[y_min] + 1
+                width = xx[x_max] - xx[x_min] + 1
+                area = width * height
+                if area > area_max:
+                    area_max = area
 
 # ==================================================================
 #                        Print Part 2
