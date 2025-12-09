@@ -42,7 +42,6 @@ for x, y in l:
 # ==================================================================
 #                       Rasterize Container
 # ==================================================================
-polygon = Polygon([(xx_map[p[0]], yy_map[p[1]]) for p in l])
 compressed_polygon = Polygon([(xx_map[p[0]], yy_map[p[1]]) for p in l])
 world_shape = (len(yy), len(xx))
 arr = np.array(
