@@ -117,25 +117,28 @@ for y_max, r in enumerate(vertical_clearance):
     # Iterate all the x-vertices on this row
     for x1 in xcoords_on_row[y_max]:
 
-        # For each one, try every other x-coordinate
-        for x2 in range(len(r)):
+        # Look both directions
+        for d in [-1, 1]:
+            # Max clearence
+            clearence = r[x1]
 
-            # Find the maximum available clearance between these x1 and x2.
-            clearence = int(y_max - min(r[x1], r[x2]))
+            # For each one, try every other x-coordinate
+            for x2 in range(0, x1) if d == -1 else range(x1, len(r)):
+                clearence = min(clearence, r[x2])
 
-            # Iterate over all y-vertices that fits the clearence
-            for y_min in (
-                    y for y in ycoords_on_col[x2] if y >= clearence
-            ):
-                x_min = min(x1, x2)
-                x_max = max(x1, x2)
+                # Iterate over all y-vertices that fits the clearence
+                for y_min in (
+                        y for y in ycoords_on_col[x2] if y >= y_max-clearence
+                ):
+                    x_min = min(x1, x2)
+                    x_max = max(x1, x2)
 
-                # Map back to uncompressed space and calculate the area :)
-                height = yy[y_max] - yy[y_min] + 1
-                width = xx[x_max] - xx[x_min] + 1
-                area = width * height
-                if area > area_max:
-                    area_max = area
+                    # Map back to uncompressed space and calculate the area :)
+                    height = yy[y_max] - yy[y_min] + 1
+                    width = xx[x_max] - xx[x_min] + 1
+                    area = width * height
+                    if area > area_max:
+                        area_max = area
 
 # =============================================================================
 #                              Print Part 2
