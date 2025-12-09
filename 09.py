@@ -33,10 +33,20 @@ l = [(*map(int, e.strip().split(',')),) for e in open(0)]
 # ==================================================================
 #                     Coordinate Compression
 # ==================================================================
+
+# These arrays are used to unmap from compressed space to
+# uncompressed space.
 xx = sorted(set(p[0] for p in l))
 yy = sorted(set(p[1] for p in l))
+
+# These dictionaries are used to map from uncompressed space to
+# compressed space
 xx_map = {val: index for index, val in enumerate(xx)}
 yy_map = {val: index for index, val in enumerate(yy)}
+
+# This array is used to quickly check available x coordinates on a
+# row. This is important as we need to check whether our minimum
+# bounding box corners two vertices.
 xcoords_on_row = [
     [x for x in range(len(xx)) if (xx[x], yy[y]) in l]
     for y in range(len(yy))]
@@ -45,15 +55,37 @@ xcoords_on_row = [
 #                       Rasterize Container
 # ==================================================================
 polygon = Polygon([(xx_map[p[0]], yy_map[p[1]]) for p in l])
-arr = np.zeros((len(yy_map), len(xx_map)))
-for (y, x) in np.ndindex(arr.shape):
-    if polygon.covers(Point(x, y)):
-        arr[y, x] = 1
+compressed_polygon = Polygon([(xx_map[p[0]], yy_map[p[1]]) for p in l])
+world_shape = (len(yy), len(xx))
+arr = np.array(
+    [
+        compressed_polygon.covers(Point(x,y))
+        for y,x in np.ndindex(world_shape)
+    ]).reshape(world_shape)
 
 # ==================================================================
 #                   Calculate Height Histogram
 # ==================================================================
-height_hist = np.zeros(len(xx_map))
+
+# In order to quickly check how large of a rectangle WWwill fit
+# between two x coordinates we construct a 2D array where each cell
+# correspondes to the amount of y-space available above the cell.
+#
+# Example on the test input:
+# . . . . . . . . . . . .
+# . . . . . . 0 0 0 0 0 .
+# . . . . . . 1 1 1 1 1 .
+# . 0 0 0 0 0 2 2 2 2 2 .
+# . 1 1 1 1 1 3 3 3 3 3 .
+# . 2 2 2 2 2 4 4 4 4 4 .
+# . . . . . . . . 5 5 5 .
+# . . . . . . . . 6 6 6 .
+# . . . . . . . . . . . .
+
+# Construction is trivial, we keep track of the current height
+# available in each column and iterate down. Resetting if we step
+# outside the shape.
+height_hist = np.zeros(len(xx))
 vertical_space = np.zeros(arr.shape)
 for (y, x) in np.ndindex(arr.shape):
     if arr[y, x]:
