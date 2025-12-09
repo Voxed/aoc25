@@ -52,9 +52,9 @@ arr = np.array(
     ]).reshape(world_shape)
 
 # ==================================================================
-#                   Calculate Height Histogram
+#                   Calculate Clearance Histogram
 # ==================================================================
-# In order to quickly check how large of a rectangle WWwill fit
+# In order to quickly check how large of a rectangle will fit
 # between two x coordinates we construct a 2D array where each cell
 # correspondes to the amount of y-space available above the cell.
 #
