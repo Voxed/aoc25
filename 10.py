@@ -1,33 +1,23 @@
 from collections import namedtuple
-from functools import cache
-import sympy as sp
 import numpy as np
 from scipy.optimize import milp, LinearConstraint, Bounds
 
 Machine = namedtuple('Machine', ('indicators', 'buttons', 'joltage'))
 machines = []
 
-l = [e.strip() for e in open(0)]
+l = [e.strip().split(' ') for e in open(0)]
 for m in l:
-    wiring_index = m.index('(') - 1
-    joltage_index = m.index('{') - 1
-    indicator = tuple(m == '#' for m in list(m[1:wiring_index-1]))
-    wiring = eval(m[wiring_index+1:joltage_index].replace(' ', ',').replace(')', ',)'))
-    joltage = eval(m[joltage_index:].replace('{', '(').replace('}', ')'))
-    machines.append(Machine(indicator, wiring, joltage))
-    
+    indicators = [e == '#' for e in m[0][1:-1]]
+    buttons = [eval(e.replace(')', ',)')) for e in m[1:-1]]
+    joltages = list(map(int, m[-1][1:-1].split(',')))
+    machines.append(Machine(indicators, buttons, joltages))
+
 ss = 0
 for m in machines:
-   
-    N = len(m.joltage)
-    V = len(m.buttons)
-    eqs = []
-    for i, jolt in enumerate(m.joltage):
-        coefficients = []
-        for j, b in enumerate(m.buttons):
-            coefficients.append(1 if i in b else 0)
-        eqs.append(coefficients)
-
+    eqs = [
+        [1 if i in b else 0 for b in m.buttons]
+        for i in range(len(m.joltage))
+    ]
     num_variables = len(m.buttons)
     result = milp(c=np.ones(num_variables), 
                 constraints=LinearConstraint(eqs, m.joltage, m.joltage), # m.joltage <= coefficients * variables <= m.joltage
