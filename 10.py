@@ -13,6 +13,7 @@ for m in l:
     joltages = list(map(int, m[-1][1:-1].split(',')))
     machines.append(Machine(indicators, buttons, joltages))
 
+# Breadth first search
 part1 = 0
 for m in machines:
     states = set([tuple(False for _ in m.indicators)])
@@ -31,6 +32,7 @@ for m in machines:
     part1 += i
 print(part1)
 
+# Mixed integer linear programming
 part2 = 0
 for m in machines:
     eqs = [
