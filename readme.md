@@ -14,11 +14,6 @@
 |12|✅|  |  |  |02:28:39|00:00:24|02:29:03
 
 ```mermaid
----
-config:
-  xyChart:
-    width: 900
----
 xychart
     title "Time taken per star"
     x-axis "Days" [1,2,3,4,5,6,7,8,9,10,11,12, 13]
